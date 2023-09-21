@@ -63,8 +63,19 @@ $meeting = Zoom::getMeeting('MEETING_ID');
 ### Actualizar una reunión
 
 ```php
+$config = [
+	'meeting' => [
+		'topic' => 'Título de la reunión',
+		'start_time' => now()->format('Y-m-d\TH:i:s'),
+		'duration' => '60',
+		'timezone' => 'America/Mexico_City' 
+		'password' => '126816' 
+	]
+]
 $updatedMeeting = Zoom::updateMeeting('MEETING_ID', $config);
 ```
+
+En la actualización los valores son opcionales.
 
 ### Eliminar una reunión
 
@@ -85,8 +96,8 @@ $meeting = Zoom::createMeeting([
 		'topic' => 'Título de la reunión',
 		'start_time' => now()->format('Y-m-d\TH:i:s'),
 		'duration' => '60',
-		'timezone' => 'America/Mexico_City' // Consulta \Innoboxrr\ZoomSdk\Support\Constants para ver los posibles valores
-		'password' => '126816' // Hasta 10 caracteres
+		'timezone' => 'America/Mexico_City' 
+		'password' => '126816' 
 	]
 ]);
 ```
@@ -109,7 +120,16 @@ $meeting = Zoom::getMeeting('MEETING_ID', $config);
 ### Actualizar una reunión
 
 ```php
-$config = [/*...*/];
+$config = [
+	/*...*/
+	'meeting' => [
+		'topic' => 'Título de la reunión',
+		'start_time' => now()->format('Y-m-d\TH:i:s'),
+		'duration' => '60',
+		'timezone' => 'America/Mexico_City' 
+		'password' => '126816'
+	]
+];
 
 $updatedMeeting = Zoom::updateMeeting('MEETING_ID', $config);
 ```
