@@ -1,0 +1,34 @@
+{
+    "name": "innoboxrr/zoom-sdk",
+    "description": "Paquete para administrar operaciones con Zoom",
+    "type": "library",
+    "license": "+",
+    "autoload": {
+        "psr-4": {
+            "Innoboxrr\\ZoomSdk\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Homero Raul",
+            "email": "h.raulvc@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "orchestra/testbench": "^8.11"
+    },
+    "require": {
+        "innoboxrr/larapack-generator": "^3.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Innoboxrr\\ZoomSdk\\Providers\\AppServiceProvider",
+                "Innoboxrr\\ZoomSdk\\Providers\\AuthServiceProvider",
+                "Innoboxrr\\ZoomSdk\\Providers\\EventServiceProvider",
+                "Innoboxrr\\ZoomSdk\\Providers\\RouteServiceProvider"
+            ]
+        }
+    }
+}
