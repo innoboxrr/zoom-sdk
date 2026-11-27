@@ -1,11 +1,16 @@
 {
     "name": "innoboxrr/zoom-sdk",
-    "description": "Paquete para administrar operaciones con Zoom",
+    "description": "Crea, consulta, actualiza y elimina reuniones de Zoom desde Laravel con la API Server-to-Server OAuth.",
     "type": "library",
-    "license": "+",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Innoboxrr\\ZoomSdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Innoboxrr\\ZoomSdk\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -15,11 +20,16 @@
         }
     ],
     "minimum-stability": "stable",
-    "require-dev": {
-        "orchestra/testbench": "^8.11"
-    },
     "require": {
-        "innoboxrr/larapack-generator": "^3.2"
+        "php": "^8.3",
+        "illuminate/http": "^13.0",
+        "illuminate/support": "^13.0",
+        "illuminate/validation": "^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^11.0",
+        "innoboxrr/larapack-generator": "^9.0",
+        "phpunit/phpunit": "^12.0 || ^13.0"
     },
     "extra": {
         "laravel": {
@@ -28,7 +38,10 @@
                 "Innoboxrr\\ZoomSdk\\Providers\\AuthServiceProvider",
                 "Innoboxrr\\ZoomSdk\\Providers\\EventServiceProvider",
                 "Innoboxrr\\ZoomSdk\\Providers\\RouteServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Zoom": "Innoboxrr\\ZoomSdk\\Facades\\Zoom"
+            }
         }
     }
 }

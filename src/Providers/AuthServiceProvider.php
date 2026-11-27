@@ -3,35 +3,54 @@
 namespace Innoboxrr\ZoomSdk\Providers;
 
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
+/**
+ * Hereda de ServiceProvider y no del AuthServiceProvider de Foundation, igual
+ * que los proveedores de rutas y de eventos: del de Foundation no se usaba
+ * nada y cada politica se registra aqui con Gate::policy().
+ */
 class AuthServiceProvider extends ServiceProvider
 {
 
-    public function boot()
+    public function boot(): void
     {
-
         $this->mapPolicies();
-        
     }
 
-    public function mapPolicies()
+    public function mapPolicies(): void
     {
+        // Sin cache a proposito: leerla al arrancar rompe `php artisan migrate`
+        // con CACHE_STORE=database antes de que exista la tabla `cache`, y la
+        // clave quedaba compartida con cualquier otro paquete.
+        foreach ($this->customDiscoverPolicies() as $model => $policy) {
+            Gate::policy($model, $policy);
+        }
+    }
 
-        foreach (glob(__DIR__ . '/../Policies/*.php') as $file) {
+    /**
+     * Policies/{Modelo}Policy.php => Models/{Modelo}.php.
+     *
+     * @return array<class-string, class-string>
+     */
+    protected function customDiscoverPolicies(): array
+    {
+        $policies = [];
 
-            $policy = 'Innoboxrr\ZoomSdk\Policies\\' . substr(basename($file), 0, -4);
-            
-            $model = 'Innoboxrr\ZoomSdk\Models\\' . str_replace('Policy', '', $policy);
+        foreach (glob(__DIR__ . '/../Policies/*.php') ?: [] as $file) {
+            $name = basename($file, '.php');
+            $policy = 'Innoboxrr\ZoomSdk\Policies\\' . $name;
+
+            // Con el nombre corto de la policy: con el completo la clase del
+            // modelo nunca existia.
+            $model = 'Innoboxrr\ZoomSdk\Models\\' . substr($name, 0, -strlen('Policy'));
 
             if (class_exists($model) && class_exists($policy)) {
-            
-                Gate::policy($model, $policy);
-            
+                $policies[$model] = $policy;
             }
-
         }
 
+        return $policies;
     }
 
 }
