@@ -26,7 +26,9 @@ trait MeetingsOperations
     {
         $data = $this->prepareConfig($config);
         $meeting = new Meeting($data);
-        return $meeting->update($meetingId);
+        // Los cambios van en $config['meeting']. Antes no se pasaban: se
+        // mandaba un PATCH vacio y la reunion no cambiaba.
+        return $meeting->update($meetingId, $config['meeting'] ?? []);
     }
 
     public function deleteMeeting(string $meetingId, array $config = [])

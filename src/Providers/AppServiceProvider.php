@@ -3,36 +3,37 @@
 namespace Innoboxrr\ZoomSdk\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Innoboxrr\ZoomSdk\Zoom\ZoomService;
 
 class AppServiceProvider extends ServiceProvider
 {
 
-    public function register()
+    public function register(): void
     {
-        
+
         $this->mergeConfigFrom(__DIR__ . '/../../config/zoomsdk.php', 'zoomsdk');
 
         $this->app->singleton('zoom', function ($app) {
-            return new \Innoboxrr\ZoomSdk\Zoom\ZoomService();
+            return new ZoomService();
         });
 
     }
 
-    public function boot()
+    public function boot(): void
     {
-        
-        // $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-
-        // $this->loadViewsFrom(__DIR__.'/../../resources/views', 'innoboxrrzoomsdk');
 
         if ($this->app->runningInConsole()) {
-            
-            // $this->publishes([__DIR__.'/../../resources/views' => resource_path('views/vendor/innoboxrrzoomsdk'),], 'views');
 
-            // $this->publishes([__DIR__.'/../../config/innoboxrrzoomsdk.php' => config_path('innoboxrrzoomsdk.php')], 'config');
+            // `zoomsdk-config` es la etiqueta que documenta el README; `config`
+            // se conserva por la convencion del resto del ecosistema. Con
+            // `config` a secas se publica la de todos los paquetes a la vez:
+            // conviene pasar --provider.
+            $this->publishes([
+                __DIR__ . '/../../config/zoomsdk.php' => config_path('zoomsdk.php'),
+            ], ['zoomsdk-config', 'config']);
 
         }
 
     }
-    
+
 }

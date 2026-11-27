@@ -4,8 +4,9 @@ Este paquete proporciona una integración fácil y rápida con la API de Zoom pa
 
 ## Requisitos
 
-- PHP >= 7.4
-- Laravel >= 8.x
+- PHP ^8.3
+- Laravel 13 (`illuminate/*` ^13.0)
+- Una app de Zoom de tipo **Server-to-Server OAuth** (account ID, client ID y client secret)
 
 ## Instalación
 
@@ -49,7 +50,7 @@ $meeting = Zoom::createMeeting([
 		'start_time' => now()->format('Y-m-d\TH:i:s'),
 		'duration' => '60',
 		'timezone' => 'America/Mexico_City' // Consulta \Innoboxrr\ZoomSdk\Support\Constants para ver los posibles valores
-		'password' => '126816' // Hasta 10 caracteres
+		'password' => '126816' // De 6 a 8 caracteres: es lo que valida el paquete
 	]
 ]);
 ```
